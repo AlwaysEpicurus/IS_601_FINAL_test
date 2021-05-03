@@ -4,4 +4,3 @@ simplejson
 flask-mysql
 requests
 flask-mail
-random
