@@ -1,6 +1,0 @@
-Flask
-mysql-connector
-simplejson
-flask-mysql
-requests
-flask-mail
