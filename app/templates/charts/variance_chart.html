@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <body>
+    <div class="container">
+        <canvas id="myChart"></canvas>
+    </div>
+    <div style="text-align: center">
+        Variance: {{ calculated_variance }}
+    </div>
+    </body>
+
+    <script>
+
+        let varianceChart = document.getElementById('myChart').getContext('2d');
+
+        /*
+            Plugin source: https://riptutorial.com/chart-js/example/22333/draw-horizonal-lines
+            Utilized to Draw a horizontal line on chart.
+         */
+        let horizontalLinePlugin = {
+
+            /* plugin implementation */
+            afterDraw: function (chartInstance) {
+                let yScale = chartInstance.scales["y-axis-0"];
+                let canvas = chartInstance.chart;
+                let ctx = canvas.ctx;
+                let style;
+
+                let yValue;
+                if (chartInstance.options.horizontalLine) {
+                    for (let index = 0; index < chartInstance.options.horizontalLine.length; index++) {
+                        let line = chartInstance.options.horizontalLine[index];
+
+                        if (!line.style) {
+                            style = "rgba(169,169,169, .6)";
+                        } else {
+                            style = line.style;
+                        }
+
+                        if (line.y) {
+                            yValue = yScale.getPixelForValue(line.y);
+                        } else {
+                            yValue = 0;
+                        }
+
+                        ctx.lineWidth = 3;
+
+                        if (yValue) {
+                            ctx.beginPath();
+                            ctx.moveTo(0, yValue);
+                            ctx.lineTo(canvas.width, yValue);
+                            ctx.strokeStyle = style;
+                            ctx.stroke();
+                        }
+
+                        if (line.text) {
+                            ctx.fillStyle = style;
+                            ctx.fillText(line.text, 0, yValue + ctx.lineWidth);
+                        }
+                    }
+                }
+            }
+        };
+
+        let data = {
+            labels: [{% for item in labels_for_chart %}
+                "{{item}}",
+            {% endfor %}],
+            datasets: [
+                {
+                    label: "{{ variable_selection }}",
+                    data: [{% for item in values_for_chart %}
+                        "{{item}}",
+                    {% endfor %}],
+                    backgroundColor: "rgba(75,192,192,0.4)",
+                    borderColor: "rgba(75,192,192,1)",
+                },
+                {
+                    label: 'Variance',
+                    backgroundColor: 'rgba(226,106,106,1)'
+                }
+            ],
+        }
+
+        let chart = new Chart(varianceChart, {
+            plugins: [horizontalLinePlugin],
+            type: 'line', // bar, horizontalBar, pie, line, donught
+            data: data,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                horizontalLine: [{
+                    y: "{{calculated_variance}}",
+                    style: "rgba(255, 0, 0, .4)",
+                    text: "variance"
+                }],
+                title: {
+                    display: true,
+                    text: 'Variance Chart'
+                }
+            }
+        });
+
+    </script>
+
+{% endblock %}

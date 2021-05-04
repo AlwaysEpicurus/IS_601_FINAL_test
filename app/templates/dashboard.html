@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+   <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:white;">
+                    View Statistics
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{{ url_for('view_mean_statistics') }}">Mean</a>
+                    <a class="dropdown-item" href="{{ url_for('view_median_statistics') }}">Median</a>
+                    <a class="dropdown-item" href="{{ url_for('view_mode_statistics') }}">Mode</a>
+                    <a class="dropdown-item" href="{{ url_for('view_standard_deviation_statistics') }}">Standard Deviation</a>
+                    <a class="dropdown-item" href="{{ url_for('view_variance_statistics') }}">Variance</a>
+                    <a class="dropdown-item" href="{{ url_for('view_zscore_statistics') }}">Z-Score</a>
+                </div>
+            </div>
+{% endblock %}

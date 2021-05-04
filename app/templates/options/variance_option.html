@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <h1>
+        Variance Options
+    </h1>
+    <form method="POST" action="/createVarianceChart">
+        <div class="form-group">
+            <label for="variableSelection">Select a Variable to Calculate From</label>
+            <select class="form-control" id="variableSelection" name="variable-selection">
+                <option value="PopulationA">PopulationA</option>
+                <option value="Population1">Population1</option>
+                <option value="Population">Population</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Make Chart</button>
+    </form>
+{% endblock %}
