@@ -1,8 +1,0 @@
-{% extends "layout.html" %}
-{% block content %}
-    <div id="myPlot"></div>
-</body>
-<script>
-    Plotly.newPlot("myPlot", {{ fig | safe }})
-</script>
-{% endblock %}
